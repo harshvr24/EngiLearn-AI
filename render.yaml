@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: engilearn-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: engilearn-db
+          property: internalConnectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: engilearn-redis
+          property: connectionString
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      # Allow all *.vercel.app origins (covers preview + production deploys).
+      # Add your exact Vercel URL to CORS_ORIGINS in the Render dashboard for
+      # a tighter allow-list once you know the production URL.
+      - key: CORS_ORIGIN_REGEX
+        value: "https://.*\\.vercel\\.app"
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: LLM_PROVIDER
+        value: groq
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: LLM_TEMPERATURE
+        value: "0.7"
+      - key: LLM_REQUEST_TIMEOUT
+        value: "60"
+      # Set this in the Render dashboard — do not commit the real key here.
+      - key: GROQ_API_KEY
+        sync: false
+
+databases:
+  - name: engilearn-db
+    databaseName: engilearn
+    user: engilearn
+    plan: free
+
+redis:
+  - name: engilearn-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
