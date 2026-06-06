@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "engilearn-backend"
+version = "0.1.0"
+description = "Production-grade backend for EngiLearn AI — a multi-agent AI tutor."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "EngiLearn AI" }]
+
+dependencies = [
+    "fastapi>=0.115,<0.116",
+    "uvicorn[standard]>=0.34,<0.35",
+    "gunicorn>=23,<24",
+    "pydantic>=2.10,<3",
+    "pydantic-settings>=2.7,<3",
+    "sqlalchemy[asyncio]>=2.0.36,<2.1",
+    "asyncpg>=0.30,<0.31",
+    "alembic>=1.14,<1.15",
+    "redis>=5.2,<6",
+    "langchain>=0.3.14,<0.4",
+    "langchain-core>=0.3.29,<0.4",
+    "langchain-groq>=0.2.3,<0.3",
+    "langchain-google-genai>=2.0.8,<3",
+    "langchain-ollama>=0.2.2,<0.3",
+    "tenacity>=9.0,<10",
+    "structlog>=24.4,<25",
+    "sse-starlette>=2.2,<3",
+    "python-json-logger>=3.2,<4",
+    "python-multipart>=0.0.9,<1",
+    "pymupdf>=1.24,<2",
+    "python-docx>=1.1,<2",
+    "python-pptx>=1.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9",
+    "pytest-asyncio>=0.25,<0.26",
+    "httpx>=0.28,<0.29",
+    "aiosqlite>=0.20,<0.21",
+    "fakeredis>=2.26,<3",
+    "mypy>=1.14,<2",
+    "types-redis",
+    "pre-commit>=4.0,<5",
+    "black>=24.10,<25",
+    "isort>=5.13,<6",
+    "flake8>=7.1,<8",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.black]
+line-length = 79
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q"

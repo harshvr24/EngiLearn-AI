@@ -1,0 +1,5 @@
+- Typography scale (use a real type system — not random font sizes)
+- Spacing system (8px base grid)
+- Color tokens (primary, neutral, accent — no random hex codes)
+- Component patterns (button states, card structure, form layouts)
+- "Avoid generic AI aesthetic" instructions
