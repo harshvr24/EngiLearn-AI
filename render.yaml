@@ -10,7 +10,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: engilearn-db
-          property: internalConnectionString
+          property: connectionString
       - key: REDIS_URL
         fromService:
           type: redis
@@ -20,9 +20,6 @@ services:
         value: production
       - key: LOG_LEVEL
         value: INFO
-      # Allow all *.vercel.app origins (covers preview + production deploys).
-      # Add your exact Vercel URL to CORS_ORIGINS in the Render dashboard for
-      # a tighter allow-list once you know the production URL.
       - key: CORS_ORIGIN_REGEX
         value: "https://.*\\.vercel\\.app"
       - key: WEB_CONCURRENCY
@@ -35,7 +32,6 @@ services:
         value: "0.7"
       - key: LLM_REQUEST_TIMEOUT
         value: "60"
-      # Set this in the Render dashboard — do not commit the real key here.
       - key: GROQ_API_KEY
         sync: false
 
@@ -43,6 +39,7 @@ services:
     name: engilearn-redis
     plan: free
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
 databases:
   - name: engilearn-db
