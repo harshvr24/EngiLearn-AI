@@ -39,13 +39,13 @@ services:
       - key: GROQ_API_KEY
         sync: false
 
+  - type: redis
+    name: engilearn-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
 databases:
   - name: engilearn-db
     databaseName: engilearn
     user: engilearn
     plan: free
-
-redis:
-  - name: engilearn-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru
